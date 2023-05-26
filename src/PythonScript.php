@@ -24,7 +24,7 @@ class PythonScript
         $this->currentDirPath = dirname(__FILE__);
 
         $this->imagePath = $this->currentDirPath . "/" .
-            $image->filename . '.' . $image->extension;
+            ($image->filename ?? 'random') . '.' . ($image->extension ?? 'png');
 
         $this->imageDetectedPath = $this->currentDirPath . "/" .
             $image->filename . 'Detected.' . $image->extension;
