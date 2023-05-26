@@ -38,11 +38,11 @@ class PythonScript
             $objects = implode('=True,', $this->customObjects) . '=True';
             return <<<EOF
 custom_objects = detector.CustomObjects($objects)
-detections, objects_path = detector.detectCustomObjectsFromImage(custom_objects=custom_objects, 
+detections = detector.detectCustomObjectsFromImage(custom_objects=custom_objects,
 EOF;
         }
 
-        return "detections, objects_path = detector.detectObjectsFromImage(";
+        return "detections = detector.detectObjectsFromImage(";
     }
 
     protected function speed()
@@ -64,11 +64,11 @@ detector = ObjectDetection()
 detector.setModelTypeAs$this->modelType()
 detector.setModelPath("$this->modelPath")
 detector.loadModel({$this->speed()})
-{$this->objects()}input_image="$this->imagePath", output_image_path="$this->imageDetectedPath", minimum_percentage_probability=$this->percentage, extract_detected_objects=True)
+{$this->objects()}input_image="$this->imagePath", minimum_percentage_probability=$this->percentage, extract_detected_objects=False)
 
 objects = []
-for eachObject, eachObjectPath in zip(detections, objects_path):
-    objects.append({"name": eachObject["name"], "percentage": eachObject["percentage_probability"], "box_points": eachObject["box_points"], "path": eachObjectPath})
+for eachObject in detections:
+    objects.append({"name": eachObject["name"], "percentage": eachObject["percentage_probability"], "box_points": eachObject["box_points"]})
 
 print(objects)
 EOF;
