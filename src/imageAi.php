@@ -80,8 +80,6 @@ class imageAi
         $this->createExecPythonFile();
 
         $this->results = array_map(function ($object)  {
-                $object['image'] = $this->imageManager->make($object['path']);
-                unset($object['path']);
                 return (object) $object;
         }, $this->execAndGetOutput());
 
